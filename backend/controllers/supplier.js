@@ -22,4 +22,11 @@ const registerSupplier = async (request, response) => {
         return response.status(400).send("Failed to register supplier.")
     return response.status(200).send( {result} );
 };
-export default { registerSupplier };
+
+const listSupplier = async (request, response) => {
+    const supplierSchema = await supplier.find();
+    if(!supplierSchema || supplierSchema.length==0) return response.status(400).send("Empty supplier list.");
+    return response.status(200).send( {supplierSchema} );
+}
+
+export default { registerSupplier, listSupplier };

@@ -27,4 +27,11 @@ const registerCustomer = async (request, response) => {
         return response.status(400).send("Failed to register customer.")
     return response.status(200).send({ result });
 };
-export default { registerCustomer };
+
+const listCustomer = async (request, response) => {
+    const customerSchema = await customer.find();
+    if(!customerSchema || customerSchema.length==0) return response.status(400).send("Empty customer list.");
+    return response.status(200).send( {customerSchema} );
+}
+
+export default { registerCustomer, listCustomer };

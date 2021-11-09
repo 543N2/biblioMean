@@ -31,4 +31,11 @@ const registerBook = async (request, response) => {
         return response.status(400).send("Failed to register Book.")
     return response.status(200).send({ result });
 };
-export default { registerBook };
+
+const listBook = async (request, response) => {
+    const bookSchema = await book.find();
+    if(!bookSchema || bookSchema.length==0) return response.status(400).send("Empty book list.");
+    return response.status(200).send( {bookSchema} );
+}
+
+export default { registerBook, listBook };
