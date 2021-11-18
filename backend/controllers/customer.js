@@ -72,4 +72,24 @@ const deleteCustomer = async (request, response) => {
         : response.status(200).send("Customer deleted");
 };
 
-export default { listCustomer, registerCustomer, updateCustomer, deleteCustomer };
+const login = async (request, response) => {
+    if (!request.body.email || !request.body.password)
+        return response.status(400).send({ message: "Incomplete data" });
+
+    const customerLogin = await customer.findOne({ email: request.body.email });
+    if (!customerLogin)
+        return response.status(400).send({ message: "Wrong email or password" });
+
+    return (customerLogin.password === request.body.password)
+        ? response.status(200).send(customerLogin)
+        : response.status(400).send({ message: "Wrong email or password" });
+
+};
+
+export default {
+    listCustomer,
+    registerCustomer,
+    updateCustomer,
+    deleteCustomer,
+    login
+};
